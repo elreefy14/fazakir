@@ -17,6 +17,7 @@ import 'package:fazakir/Features/search/presentation/views/search_view.dart';
 import 'package:fazakir/Features/sebha/data/models/sebha_zikr_model.dart';
 import 'package:fazakir/Features/sebha/presentation/views/saved_azkar_view.dart';
 import 'package:fazakir/Features/sebha/presentation/views/sebha_view.dart';
+import 'package:fazakir/Features/sebha/presentation/views/tasbih_main_view.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> onGenerateRoutes(RouteSettings settings) {
@@ -67,6 +68,8 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
           bookName: args['bookName'],
         ),
       );
+    case TasbihMainView.routeName:
+      return MaterialPageRoute(builder: (context) => const TasbihMainView());
     case SavedAzkarView.routeName:
       return MaterialPageRoute(builder: (context) => const SavedAzkarView());
     case SebhaView.routeName:

@@ -7,7 +7,7 @@ import 'package:fazakir/Features/home/presentation/views/widgets/custom_bottom_n
 import 'package:fazakir/Features/prayer_tracker/presentation/manager/prayer_tracker_cubit.dart';
 import 'package:fazakir/Features/prayer_tracker/presentation/views/prayer_tracker_view.dart';
 import 'package:fazakir/Features/prayer_times/presentation/views/prayer_times_view.dart';
-import 'package:fazakir/Features/sebha/presentation/views/saved_azkar_view.dart';
+import 'package:fazakir/Features/sebha/presentation/views/tasbih_main_view.dart';
 import 'package:fazakir/Features/settings/presentation/views/settings_view.dart';
 import 'package:fazakir/core/utils/func/get_it_setup.dart';
 import 'package:flutter/material.dart';
@@ -83,9 +83,7 @@ class NavigationPage extends StatelessWidget {
       case 1:
         return const PrayerTimesView();
       case 2:
-        return const SavedAzkarView(
-          fromNavigation: true,
-        );
+        return const TasbihMainView(fromNavigation: true);
       case 3:
         return const FavoritesView();
       case 4:
