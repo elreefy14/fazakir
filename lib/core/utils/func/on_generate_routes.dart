@@ -1,6 +1,7 @@
 import 'package:fazakir/Features/about_religion/presentation/views/about_religion_view.dart';
 import 'package:fazakir/Features/about_religion/presentation/views/video_player_view.dart';
 import 'package:fazakir/Features/ahadith/presentation/views/a_6books_of_hadith_view.dart';
+import 'package:fazakir/Features/ahadith/presentation/views/hadith_topics_view.dart';
 import 'package:fazakir/Features/ahadith/presentation/views/ahadith_view.dart';
 import 'package:fazakir/Features/ahadith/presentation/views/section_of_book_hadith_view.dart';
 import 'package:fazakir/Features/azkar/domain/entities/azkar_category_entity.dart';
@@ -11,6 +12,7 @@ import 'package:fazakir/Features/home/presentation/views/navigation_page.dart';
 import 'package:fazakir/Features/home/presentation/views/shortcuts_view.dart';
 import 'package:fazakir/Features/intro/presentation/views/intro_view.dart';
 import 'package:fazakir/Features/prayer_times/presentation/views/qiblah_view.dart';
+import 'package:fazakir/Features/quran/presentation/views/quran_library_view.dart';
 import 'package:fazakir/Features/quran/presentation/views/quran_page_view.dart';
 import 'package:fazakir/Features/quran/presentation/views/quran_view.dart';
 import 'package:fazakir/Features/search/presentation/views/search_view.dart';
@@ -52,6 +54,9 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
     case A6BooksOfHadithView.routeName:
       return MaterialPageRoute(
           builder: (context) => const A6BooksOfHadithView());
+    case HadithTopicsView.routeName:
+      return MaterialPageRoute(
+          builder: (context) => const HadithTopicsView());
     case SectionOfBookHadithView.routeName:
       final args = settings.arguments as String;
       return MaterialPageRoute(
@@ -109,17 +114,18 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
                 shouldHighlightText: shouldHighlightText,
                 highlightVerse: highlightVerse,
               )); */
+    case QuranLibraryView.routeName:
+      final args = settings.arguments as Map<String, dynamic>?;
+      final pageNumber = args?['pageNumber'] as int?;
+      return MaterialPageRoute(
+        builder: (context) => QuranLibraryView(initialPage: pageNumber),
+      );
     case QuranPageView.routeName:
       final args = settings.arguments as Map<String, dynamic>;
       final pageNumber = args['pageNumber'] as int;
-      final shouldHighlightText = args['shouldHighlightText'] as bool;
-      final highlightVerse = args['highlightVerse'] as String;
       return MaterialPageRoute(
-          builder: (context) => QuranPageView(
-                pageNumber: pageNumber,
-                shouldHighlightText: shouldHighlightText,
-                highlightVerse: highlightVerse,
-              ));
+        builder: (context) => QuranLibraryView(initialPage: pageNumber),
+      );
     default:
       return MaterialPageRoute(builder: (context) => const NavigationPage());
   }

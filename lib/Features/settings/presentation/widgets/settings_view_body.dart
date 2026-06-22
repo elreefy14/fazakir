@@ -7,8 +7,15 @@ import 'package:fazakir/core/widgets/custom_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class SettingsViewBody extends StatelessWidget {
+class SettingsViewBody extends StatefulWidget {
   const SettingsViewBody({super.key});
+
+  @override
+  State<SettingsViewBody> createState() => _SettingsViewBodyState();
+}
+
+class _SettingsViewBodyState extends State<SettingsViewBody> {
+  bool _creatorsExpanded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +25,79 @@ class SettingsViewBody extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ...getSettingsList(context).map((e) => e.buildList(context)),
-            const SizedBox(
-              height: 6,
+            ...getSettingsList(context, onCreatorsTap: () {
+              setState(() {
+                _creatorsExpanded = !_creatorsExpanded;
+              });
+            }).map((e) => e.buildList(context)),
+            const SizedBox(height: 6),
+            AnimatedSize(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              child: _creatorsExpanded
+                  ? const AppCreators()
+                  : const SizedBox.shrink(),
             ),
-            const AppCreators(),
-            const SizedBox(
-              height: 32,
+            const SizedBox(height: 16),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
+              decoration: ShapeDecoration(
+                color: const Color(0xFFF0F7F0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  side: const BorderSide(
+                    color: Color(0xFFB2D8B2),
+                    width: 1,
+                  ),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    '🤲 صدقة جارية',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF2E7D32),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    'هذا التطبيق صدقة جارية على روح',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Color(0xFF555555),
+                      height: 1.7,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const Text(
+                    'المستشار ماهر منسي',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF1B5E20),
+                      height: 1.7,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const Text(
+                    'نسأل الله أن يتغمده بواسع رحمته\nويجعل هذا العمل في ميزان حسناته.',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Color(0xFF555555),
+                      height: 1.7,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
             ),
+            const SizedBox(height: 16),
+
             CustomTextButton(
               onPressed: () {
                 shareApp(context);
@@ -46,9 +118,7 @@ class SettingsViewBody extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 90,
-            ),
+            const SizedBox(height: 90),
           ],
         ),
       ),

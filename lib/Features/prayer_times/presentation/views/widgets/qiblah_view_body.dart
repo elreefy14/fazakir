@@ -1,18 +1,10 @@
-import 'package:fazakir/Features/prayer_times/presentation/views/widgets/move_for_compass_dialog.dart';
-import 'package:fazakir/Features/prayer_times/presentation/views/widgets/qiblah_compass.dart';
 import 'package:flutter/material.dart';
 
+// This widget is kept for backwards compatibility.
+// The Qibla screen is fully managed by QiblahView directly.
 class QiblahViewBody extends StatelessWidget {
   const QiblahViewBody({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const Stack(
-      alignment: Alignment.center,
-      children: [
-        QiblahCompass(),
-        MoveForCompassDialog(),
-      ],
-    );
-  }
+  Widget build(BuildContext context) => const SizedBox.shrink();
 }

@@ -1,5 +1,5 @@
 import 'package:fazakir/Features/quran/domain/entities/surah_entity.dart';
-import 'package:fazakir/Features/quran/presentation/views/quran_page_view.dart';
+import 'package:fazakir/Features/quran/presentation/views/quran_library_view.dart';
 import 'package:fazakir/core/enums/revelation_type_enum.dart';
 import 'package:fazakir/core/extensions/number_converter.dart';
 import 'package:fazakir/core/utils/app_colors.dart';
@@ -86,11 +86,8 @@ class SurahOverviewItem extends StatelessWidget {
 
         Navigator.pushNamed(
           context,
-          QuranPageView.routeName,
+          QuranLibraryView.routeName,
           arguments: {
-            'highlightVerse':
-                getVerse(surahEntity.number, 1, verseEndSymbol: true),
-            'shouldHighlightText': true,
             'pageNumber': getPageNumber(surahEntity.number, 1),
           },
         );

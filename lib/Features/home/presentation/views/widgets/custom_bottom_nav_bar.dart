@@ -5,6 +5,7 @@ import 'package:fazakir/core/cubits/theme_cubit/theme_cubit.dart';
 import 'package:fazakir/core/utils/app_assets.dart';
 import 'package:fazakir/core/utils/app_colors.dart';
 import 'package:fazakir/generated/l10n.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -97,12 +98,21 @@ class CustomBottomNavBar extends StatelessWidget {
         iconSize: 22,
       ),
       PersistentBottomNavBarItem(
-        svgAsset: Assets.assetsImagesPrayerTimesBackgroundShapeSvg, // Use an appropriate existing icon or placeholder
-        icon: const Icon(Icons.check_circle_outline, size: 28), // using a flutter icon for tracking
+        svgAsset: null,
+        icon: const Icon(
+          CupertinoIcons.checkmark_square_fill,
+          color: AppColors.primaryColor,
+          size: 26,
+        ),
+        inactiveIcon: const Icon(
+          CupertinoIcons.checkmark_square,
+          color: AppColors.greyColor,
+          size: 26,
+        ),
         activeColorPrimary: AppColors.primaryColor,
         inactiveColorPrimary: AppColors.greyColor,
-        title: 'تتبع الصلوات', // Hardcoded as requested
-        iconSize: 28,
+        title: 'تتبع الصلوات',
+        iconSize: 26,
       ),
     ];
   }

@@ -5,6 +5,7 @@ import 'package:fazakir/Features/home/presentation/views/navigation_page.dart';
 import 'package:fazakir/Features/intro/presentation/views/intro_view.dart';
 import 'package:fazakir/core/cubits/theme_cubit/theme_cubit.dart';
 import 'package:fazakir/core/flutter_quran/lib/src/utils/flutter_quran_utils.dart';
+import 'package:quran_library/quran_library.dart';
 import 'package:fazakir/core/utils/app_colors.dart';
 import 'package:fazakir/core/utils/custom_bloc_observer.dart';
 import 'package:fazakir/core/utils/custom_fade_page_trasitions_builder.dart';
@@ -30,6 +31,7 @@ void main() async {
     ObjectBoxManager.initialize(),
     NotificationService.initNotification(),
     AndroidAlarmManager.initialize(),
+    QuranLibrary.init(),
   ]);
   NotificationService.scheduleNotification();
   runApp(BlocProvider(

@@ -1,11 +1,10 @@
 import 'package:fazakir/Features/quran/presentation/manager/cubits/quran_cubit/quran_cubit.dart';
-import 'package:fazakir/Features/quran/presentation/views/quran_page_view.dart';
+import 'package:fazakir/Features/quran/presentation/views/quran_library_view.dart';
 import 'package:fazakir/Features/quran/presentation/widgets/filtered_surahs_sliver_list.dart';
 import 'package:fazakir/Features/quran/presentation/widgets/pages_and_juzz_quran_search.dart';
 import 'package:fazakir/Features/quran/presentation/widgets/search_in_quran_ayat_sliver_list.dart';
 import 'package:fazakir/Features/quran/presentation/widgets/search_in_quran_loading_widget.dart';
 import 'package:fazakir/Features/quran/presentation/widgets/surahs_loading_widget.dart';
-import 'package:fazakir/core/flutter_quran/lib/src/app_bloc.dart';
 import 'package:fazakir/core/utils/app_colors.dart';
 import 'package:fazakir/core/utils/app_font_styles.dart';
 import 'package:fazakir/core/widgets/custom_text_button.dart';
@@ -47,16 +46,11 @@ class QuranViewBody extends StatelessWidget {
                         horizontal: 16,
                       ),
                       child: CustomTextButton(
-                          text: 'آخر صفحة زرتها',
+                          text: 'فتح المصحف',
                           onPressed: () {
                             Navigator.pushNamed(
                               context,
-                              QuranPageView.routeName,
-                              arguments: {
-                                'highlightVerse': '',
-                                'shouldHighlightText': false,
-                                'pageNumber': AppBloc.quranCubit.lastPage,
-                              },
+                              QuranLibraryView.routeName,
                             );
                           }),
                     ),
