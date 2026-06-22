@@ -25,6 +25,25 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     getFavorites();
   }
 
+  Future<void> reorderFavorites(int oldIndex, int newIndex) async {
+    if (newIndex > oldIndex) newIndex -= 1;
+    final item = favorites.removeAt(oldIndex);
+    favorites.insert(newIndex, item);
+    await _favoriteRepository
+        .reorderFavorites(favorites)
+        .onError((error, _) {});
+    safeEmit(FavoritesSuccess(favorites: List.from(favorites)));
+  }
+
+  Future<void> clearAllFavorites() async {
+    safeEmit(FavoritesLoading());
+    await _favoriteRepository.clearAllFavorites().onError((error, _) {
+      safeEmit(FavoritesFailure(message: 'Failed to clear favorites'));
+    });
+    favorites = [];
+    safeEmit(FavoritesSuccess(favorites: []));
+  }
+
   void getFavorites() {
     safeEmit(FavoritesLoading());
     final List<FavoriteEntity> result = _favoriteRepository.getFavorites();

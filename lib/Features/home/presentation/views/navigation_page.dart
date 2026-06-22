@@ -81,15 +81,15 @@ class NavigationPage extends StatelessWidget {
       case 0:
         return const HomeView();
       case 1:
-        return const PrayerTimesView();
-      case 2:
-        return const TasbihMainView(fromNavigation: true);
-      case 3:
         return const FavoritesView();
+      case 2:
+        return const PrayerTimesView();
+      case 3:
+        return const TasbihMainView(fromNavigation: true);
       case 4:
-        return const SettingsView();
-      case 5:
         return const PrayerTrackerView();
+      case 5:
+        return const SettingsView();
       default:
         return const HomeView();
     }

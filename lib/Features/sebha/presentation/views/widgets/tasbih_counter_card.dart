@@ -1,11 +1,19 @@
+import 'package:fazakir/Features/azkar/data/models/azkar_item_model.dart';
+import 'package:fazakir/Features/favorites/presentation/manager/cubits/cubit/favorites_cubit.dart';
 import 'package:fazakir/Features/sebha/data/models/sebha_zikr_model.dart';
 import 'package:fazakir/core/utils/app_font_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TasbihCounterCard extends StatefulWidget {
-  const TasbihCounterCard({super.key, required this.zikr});
+  const TasbihCounterCard({
+    super.key,
+    required this.zikr,
+    this.onCompleted,
+  });
   final SebhaZikrModel zikr;
+  final VoidCallback? onCompleted;
 
   @override
   State<TasbihCounterCard> createState() => _TasbihCounterCardState();
@@ -18,11 +26,22 @@ class _TasbihCounterCardState extends State<TasbihCounterCard> {
 
   int get _target => widget.zikr.count > 0 ? widget.zikr.count : 33;
 
+  /// Build an AzkarItem entity so the dhikr can be stored as a favorite
+  /// using the shared favorites system (shown on the favorites page).
+  AzkarItemModel get _asFavorite => AzkarItemModel(
+        id: widget.zikr.id,
+        text: widget.zikr.zikr,
+        count: _target,
+        source: null,
+      );
+
   void _increment() {
     HapticFeedback.lightImpact();
     setState(() => _count++);
     if (_count % _target == 0) {
       HapticFeedback.mediumImpact();
+      // A full round is complete → move to the next dhikr.
+      widget.onCompleted?.call();
     }
   }
 
@@ -59,6 +78,11 @@ class _TasbihCounterCardState extends State<TasbihCounterCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          // favorite toggle (top-left)
+          Align(
+            alignment: Alignment.centerLeft,
+            child: _FavoriteButton(entity: _asFavorite),
+          ),
           Text(
             widget.zikr.zikr,
             textAlign: TextAlign.center,
@@ -193,6 +217,37 @@ class _TasbihCounterCardState extends State<TasbihCounterCard> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _FavoriteButton extends StatelessWidget {
+  const _FavoriteButton({required this.entity});
+  final AzkarItemModel entity;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<FavoritesCubit, FavoritesState>(
+      builder: (context, state) {
+        final isFav = context.read<FavoritesCubit>().favorites.any(
+              (fav) => fav.getIdentifier() == entity.getIdentifier(),
+            );
+        return GestureDetector(
+          onTap: () => context.read<FavoritesCubit>().toggleFavorite(entity),
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.18),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              isFav ? Icons.favorite : Icons.favorite_border,
+              color: Colors.white,
+              size: 22,
+            ),
+          ),
+        );
+      },
     );
   }
 }

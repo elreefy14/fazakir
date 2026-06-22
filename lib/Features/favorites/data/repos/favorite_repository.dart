@@ -4,6 +4,7 @@ import 'package:fazakir/Features/about_religion/data/models/video_youtube_model.
 import 'package:fazakir/Features/about_religion/domain/entities/video_youtube_entity.dart';
 import 'package:fazakir/Features/ahadith/domain/entities/hadith_entity.dart';
 import 'package:fazakir/Features/azkar/data/models/azkar_item_model.dart';
+import 'package:fazakir/Features/azkar/domain/entities/azkar_category_favorite_entity.dart';
 import 'package:fazakir/Features/azkar/domain/entities/azkar_item_entity.dart';
 import 'package:fazakir/Features/favorites/domain/entities/favorite_entity.dart';
 import 'package:fazakir/core/utils/func/get_it_setup.dart';
@@ -39,7 +40,9 @@ class FavoriteRepository {
       Map<String, dynamic> json = jsonDecode(jsonString);
 
       // Use the identifier or some key to determine the type of entity
-      if (json.containsKey('count')) {
+      if (json.containsKey('category_name')) {
+        favorites.add(AzkarCategoryFavoriteEntity.fromJson(json));
+      } else if (json.containsKey('count')) {
         favorites.add(AzkarItemModel.fromJson(json));
       } else if (json.containsKey('url')) {
         favorites.add(VideoYoutubeModel.fromJson(json));
@@ -49,6 +52,44 @@ class FavoriteRepository {
     }
 
     return favorites;
+  }
+
+  /// Remove every saved favourite.
+  Future<void> clearAllFavorites() async {
+    final SharedPreferences prefs = getIt<SharedPreferences>();
+    await prefs.remove(_favoritesKey);
+  }
+
+  /// Add all [entities] that are not already favourited (single write).
+  Future<void> addFavorites(List<FavoriteEntity> entities) async {
+    final SharedPreferences prefs = getIt<SharedPreferences>();
+    List<String> favoriteItems = prefs.getStringList(_favoritesKey) ?? [];
+    for (final entity in entities) {
+      final String entityJson = jsonEncode(entity.toJson());
+      if (!favoriteItems.contains(entityJson)) {
+        favoriteItems.add(entityJson);
+      }
+    }
+    await prefs.setStringList(_favoritesKey, favoriteItems);
+  }
+
+  /// Remove all [entities] from favourites (single write).
+  Future<void> removeFavorites(List<FavoriteEntity> entities) async {
+    final SharedPreferences prefs = getIt<SharedPreferences>();
+    List<String> favoriteItems = prefs.getStringList(_favoritesKey) ?? [];
+    for (final entity in entities) {
+      final String entityJson = jsonEncode(entity.toJson());
+      favoriteItems.remove(entityJson);
+    }
+    await prefs.setStringList(_favoritesKey, favoriteItems);
+  }
+
+  /// Persist [reorderedList] as the new order (replaces existing list).
+  Future<void> reorderFavorites(List<FavoriteEntity> reorderedList) async {
+    final SharedPreferences prefs = getIt<SharedPreferences>();
+    final List<String> jsonList =
+        reorderedList.map((e) => jsonEncode(e.toJson())).toList();
+    await prefs.setStringList(_favoritesKey, jsonList);
   }
 
   // Retrieve specific type of favorite entities

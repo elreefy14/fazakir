@@ -18,6 +18,34 @@ class TasbihMainView extends StatefulWidget {
 }
 
 class _TasbihMainViewState extends State<TasbihMainView> {
+  final ScrollController _scrollController = ScrollController();
+  final List<GlobalKey> _itemKeys = [];
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _ensureKeys(int length) {
+    while (_itemKeys.length < length) {
+      _itemKeys.add(GlobalKey());
+    }
+  }
+
+  void _goToNext(int index) {
+    final nextIndex = index + 1;
+    if (nextIndex >= _itemKeys.length) return;
+    final ctx = _itemKeys[nextIndex].currentContext;
+    if (ctx == null) return;
+    Scrollable.ensureVisible(
+      ctx,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+      alignment: 0.1,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -31,6 +59,7 @@ class _TasbihMainViewState extends State<TasbihMainView> {
               builder: (context, state) {
                 final azkar =
                     state is GetAzkarSuccess ? state.azkar : <SebhaZikrModel>[];
+                _ensureKeys(azkar.length);
 
                 return Column(
                   children: [
@@ -39,10 +68,17 @@ class _TasbihMainViewState extends State<TasbihMainView> {
                       child: azkar.isEmpty
                           ? _buildEmptyState(context)
                           : ListView.builder(
+                              controller: _scrollController,
                               padding: const EdgeInsets.symmetric(vertical: 8),
                               itemCount: azkar.length,
-                              itemBuilder: (context, index) =>
-                                  TasbihCounterCard(zikr: azkar[index]),
+                              itemBuilder: (context, index) => KeyedSubtree(
+                                key: _itemKeys[index],
+                                child: TasbihCounterCard(
+                                  key: ValueKey(azkar[index].id),
+                                  zikr: azkar[index],
+                                  onCompleted: () => _goToNext(index),
+                                ),
+                              ),
                             ),
                     ),
                     const SizedBox(height: 12),

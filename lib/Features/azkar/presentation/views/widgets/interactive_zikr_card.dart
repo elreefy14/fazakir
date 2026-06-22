@@ -10,10 +10,12 @@ class InteractiveZikrCard extends StatefulWidget {
     super.key,
     required this.azkarItem,
     this.zikrCategory,
+    this.onCompleted,
   });
 
   final AzkarItemEntity azkarItem;
   final String? zikrCategory;
+  final VoidCallback? onCompleted;
 
   @override
   State<InteractiveZikrCard> createState() => _InteractiveZikrCardState();
@@ -54,6 +56,7 @@ class _InteractiveZikrCardState extends State<InteractiveZikrCard>
     setState(() => _current++);
     if (_isCompleted) {
       HapticFeedback.mediumImpact();
+      widget.onCompleted?.call();
     }
   }
 
@@ -99,8 +102,8 @@ class _InteractiveZikrCardState extends State<InteractiveZikrCard>
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    // Count / completed badge
                     Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 6),
@@ -129,6 +132,7 @@ class _InteractiveZikrCardState extends State<InteractiveZikrCard>
                         ],
                       ),
                     ),
+                    const Spacer(),
                     if (_isCompleted)
                       InkWell(
                         onTap: _reset,
