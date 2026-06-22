@@ -3,8 +3,10 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  connectivity_plus
   flutter_inappwebview_windows
   geolocator_windows
+  media_kit_libs_windows_audio
   objectbox_flutter_libs
   share_plus
   url_launcher_windows

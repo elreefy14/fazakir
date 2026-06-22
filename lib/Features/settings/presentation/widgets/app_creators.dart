@@ -24,9 +24,10 @@ class AppCreators extends StatelessWidget {
         color: AppColors.greyColor2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Wrap(
+        alignment: WrapAlignment.spaceAround,
+        runSpacing: 16,
+        spacing: 8,
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -74,6 +75,48 @@ class AppCreators extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
+                Assets.assetsImagesAhmedHossam,
+                width: 42,
+                height: 42,
+                fit: BoxFit.cover,
+              ),
+              const SizedBox(
+                height: 6,
+              ),
+              Text(
+                'برمجة وتطوير',
+                style: AppFontStyles.styleRegular14(context).copyWith(
+                  color: themeState == ThemeState.light
+                      ? AppColors.primaryColor
+                      : AppColors.primarySwatch.shade200,
+                ),
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              Text(
+                'م: أحمد حسام',
+                style: AppFontStyles.styleBold14(context),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
+                onTap: () {
+                  openLink('https://www.facebook.com/share/1NUxfdrMyb/');
+                },
+                child: SvgPicture.asset(
+                  Assets.assetsImagesFacebookIconSvg,
+                  width: 18,
+                  height: 18,
+                ),
+              ),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
                 Assets.assetsImagesZiad,
                 width: 42,
                 height: 42,
@@ -101,6 +144,7 @@ class AppCreators extends StatelessWidget {
                 height: 10,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
                     onTap: () {

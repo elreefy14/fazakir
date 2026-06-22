@@ -1,5 +1,6 @@
 import 'package:fazakir/Features/prayer_tracker/presentation/manager/prayer_tracker_cubit.dart';
 import 'package:fazakir/Features/prayer_tracker/presentation/manager/prayer_tracker_state.dart';
+import 'package:fazakir/Features/prayer_tracker/presentation/widgets/prayer_progress_chart.dart';
 import 'package:fazakir/core/utils/app_colors.dart';
 import 'package:fazakir/core/utils/app_font_styles.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,8 @@ class PrayerStatsView extends StatelessWidget {
                         _buildLastDayRow(context, state),
                         const SizedBox(height: 12),
                         _buildStatsGrid(context, state),
+                        const SizedBox(height: 12),
+                        PrayerProgressChart(past30Days: state.past30Days),
                       ],
                     ),
                   ),
@@ -155,6 +158,7 @@ class PrayerStatsView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(28),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
                   'سلسلة الالتزام بالصلاة',
@@ -278,23 +282,24 @@ class PrayerStatsView extends StatelessWidget {
           children: [
             Expanded(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     'آخر يوم مكتمل',
                     style: AppFontStyles.styleMedium14(context).copyWith(
                       color: Colors.grey.shade600,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    lastDayText == 'لم تكمل يوم بعد'
-                        ? lastDayText
-                        : lastDayText,
+                    lastDayText,
                     style: AppFontStyles.styleBold16(context).copyWith(
                       color: lastDay != null
                           ? AppColors.primaryColor
                           : Colors.grey.shade400,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
@@ -306,12 +311,14 @@ class PrayerStatsView extends StatelessWidget {
             ),
             Expanded(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     'آخر يوم مكتمل',
                     style: AppFontStyles.styleMedium14(context).copyWith(
                       color: Colors.grey.shade600,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -321,6 +328,7 @@ class PrayerStatsView extends StatelessWidget {
                           ? AppColors.primaryColor
                           : const Color(0xFFE8A020),
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
@@ -397,35 +405,32 @@ class PrayerStatsView extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Icon(icon,
-                      color: AppColors.primaryColor, size: 18),
-                ),
-                Text(
-                  title,
-                  style: AppFontStyles.styleMedium14(context).copyWith(
-                    color: Colors.grey.shade600,
-                  ),
-                ),
-              ],
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: AppColors.primaryColor.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(icon, color: AppColors.primaryColor, size: 20),
             ),
+            const SizedBox(height: 8),
+            Text(
+              title,
+              style: AppFontStyles.styleMedium14(context).copyWith(
+                color: Colors.grey.shade600,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 6),
             Text(
               value,
               style: AppFontStyles.styleBold20(context).copyWith(
                 color: valueColor,
               ),
-              textAlign: TextAlign.right,
+              textAlign: TextAlign.center,
             ),
           ],
         ),

@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
+@pragma('vm:entry-point')
 class NotificationService {
   NotificationService._internal();
   static final NotificationService _instance = NotificationService._internal();
@@ -214,6 +215,7 @@ class NotificationService {
   }
 }
 
+@pragma('vm:entry-point')
 Future<AzkarCategoryEntity> fetchRandomAzkarWithLimit() async {
   AzkarCategoryEntity? azkarCategory;
   bool validLength = false;

@@ -1,26 +1,50 @@
 part of 'qiblah_cubit.dart';
 
-abstract class QiblahState {}
+enum QiblahStatus { initial, loading, success, error }
 
-class QiblahInitial extends QiblahState {}
+class QiblahState {
+  const QiblahState({
+    this.status = QiblahStatus.initial,
+    this.message,
+    this.qiblahAngle = 0.0,
+    this.headingAngle = 0.0,
+    this.isAligned = false,
+    this.sensorAccuracy,
+    this.hasMagnetometer = true,
+    this.isCalibrationNeeded = false,
+    this.qiblahBearing = 0.0,
+  });
 
-class QiblahLoading extends QiblahState {}
+  final QiblahStatus status;
+  final String? message;
+  final double qiblahAngle;
+  final double headingAngle;
+  final bool isAligned;
+  final double? sensorAccuracy;
+  final bool hasMagnetometer;
+  final bool isCalibrationNeeded;
+  final double qiblahBearing;
 
-class QiblahLocationUpdated extends QiblahState {
-  final Position position;
-  final double qiblahDirection;
-
-  QiblahLocationUpdated(this.position, this.qiblahDirection);
-}
-
-class QiblahCompassUpdated extends QiblahState {
-  final double heading;
-
-  QiblahCompassUpdated(this.heading);
-}
-
-class QiblahError extends QiblahState {
-  final String message;
-
-  QiblahError(this.message);
+  QiblahState copyWith({
+    QiblahStatus? status,
+    String? message,
+    double? qiblahAngle,
+    double? headingAngle,
+    bool? isAligned,
+    double? sensorAccuracy,
+    bool? hasMagnetometer,
+    bool? isCalibrationNeeded,
+    double? qiblahBearing,
+  }) =>
+      QiblahState(
+        status: status ?? this.status,
+        message: message ?? this.message,
+        qiblahAngle: qiblahAngle ?? this.qiblahAngle,
+        headingAngle: headingAngle ?? this.headingAngle,
+        isAligned: isAligned ?? this.isAligned,
+        sensorAccuracy: sensorAccuracy ?? this.sensorAccuracy,
+        hasMagnetometer: hasMagnetometer ?? this.hasMagnetometer,
+        isCalibrationNeeded: isCalibrationNeeded ?? this.isCalibrationNeeded,
+        qiblahBearing: qiblahBearing ?? this.qiblahBearing,
+      );
 }

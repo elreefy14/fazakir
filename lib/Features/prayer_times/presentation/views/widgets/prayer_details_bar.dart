@@ -17,9 +17,14 @@ class PrayerDetailsBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(12),
-      decoration: ShapeDecoration(
-        color: isNextPrayer ? AppColors.primaryColor : AppColors.greyColor2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      decoration: BoxDecoration(
+        color: isNextPrayer
+            ? AppColors.primaryColor.withValues(alpha: 0.08)
+            : AppColors.greyColor2,
+        borderRadius: BorderRadius.circular(10),
+        border: isNextPrayer
+            ? Border.all(color: AppColors.primaryColor, width: 2)
+            : null,
       ),
       child: Row(
         children: [
@@ -27,7 +32,7 @@ class PrayerDetailsBar extends StatelessWidget {
             prayerEntity.prayer.iconSVGPath,
             width: 24,
             colorFilter: ColorFilter.mode(
-              isNextPrayer ? Colors.white : AppColors.textBlackColor,
+              isNextPrayer ? AppColors.primaryColor : AppColors.textBlackColor,
               BlendMode.srcIn,
             ),
           ),
@@ -38,15 +43,31 @@ class PrayerDetailsBar extends StatelessWidget {
             prayerEntity.prayer.arabicName,
             textAlign: TextAlign.right,
             style: AppFontStyles.styleBold14(context).copyWith(
-              color: isNextPrayer ? Colors.white : null,
+              color: isNextPrayer ? AppColors.primaryColor : null,
             ),
           ),
+          if (isNextPrayer) ...[
+            const SizedBox(width: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+              decoration: BoxDecoration(
+                color: AppColors.primaryColor,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                'القادمة',
+                style: AppFontStyles.styleBold10(context).copyWith(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
           const Spacer(),
           Text(
             prayerEntity.time,
             textAlign: TextAlign.right,
             style: AppFontStyles.styleBold14(context).copyWith(
-              color: isNextPrayer ? Colors.white : null,
+              color: isNextPrayer ? AppColors.primaryColor : null,
             ),
           ),
         ],

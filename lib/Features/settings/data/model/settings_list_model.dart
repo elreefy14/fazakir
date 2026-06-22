@@ -71,7 +71,9 @@ class SettingsListModel {
   }
 }
 
-List<SettingsListModel> getSettingsList(BuildContext context) => [
+List<SettingsListModel> getSettingsList(BuildContext context,
+        {void Function()? onCreatorsTap}) =>
+    [
       SettingsListModel(
         title: 'مواعيد التذكيرات',
         svgIconAsset: Assets.assetsImagesTazkeerIconSvg,
@@ -116,12 +118,14 @@ List<SettingsListModel> getSettingsList(BuildContext context) => [
               'https://play.google.com/store/apps/details?id=com.fazakir.elkomy');
         },
       ),
-      const SettingsListModel(
+      SettingsListModel(
         title: 'صناع التطبيق',
         svgIconAsset: Assets.assetsImagesFlagIconSvg,
-        traillingWidget: Icon(
+        traillingWidget: const Icon(
           Icons.arrow_downward_outlined,
           color: AppColors.greyColor,
         ),
+        onTap: onCreatorsTap,
       ),
     ];
+

@@ -245,5 +245,9 @@ class Assets {
   /// Assets for assetsImagesZiad
   /// assets/images/ziad.png
   static const String assetsImagesZiad = "assets/images/ziad.png";
+
+  /// Assets for assetsImagesAhmedHossam
+  /// assets/images/ahmed_hossam.jpeg
+  static const String assetsImagesAhmedHossam = "assets/images/ahmed_hossam.jpeg";
 }
 

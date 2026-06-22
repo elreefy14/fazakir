@@ -1,5 +1,5 @@
 import 'package:fazakir/Features/azkar/domain/entities/azkar_item_entity.dart';
-import 'package:fazakir/Features/home/presentation/views/widgets/container_zikr_item.dart';
+import 'package:fazakir/Features/azkar/presentation/views/widgets/interactive_zikr_card.dart';
 
 import 'package:flutter/material.dart';
 
@@ -16,11 +16,9 @@ class ZikrViewBody extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return Padding(
             padding: EdgeInsetsDirectional.only(
-                bottom: index + 1 == azkar.length ? 0 : 24),
-            child: ContainerZikrItem(
+                bottom: index + 1 == azkar.length ? 0 : 16),
+            child: InteractiveZikrCard(
               azkarItem: azkar[index],
-              margin: const EdgeInsets.symmetric(horizontal: 16),
-              withoutHeader: true,
             ),
           );
         },
