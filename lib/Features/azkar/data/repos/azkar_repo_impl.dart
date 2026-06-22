@@ -13,7 +13,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 class AzkarRepoImpl {
-  final String jsonFilePath = 'assets/json/azkar.json';
+  final String jsonFilePath = 'assets/json/azkar_tazkira.json';
   final String ruqyahJsonFilePath = 'assets/json/ruqyah.json';
   Future<List<AzkarCategoryEntity>> getAzkarCategories() async {
     final jsonString = await rootBundle.loadString(jsonFilePath);
